@@ -2,9 +2,12 @@
 {
     public class TransportModel
     {
-        public int Id { get; set; }
-        public decimal Distance { get; set; }  // Tilføj afstand (km) som input
-        public decimal TransportCost { get; set; }  // Beregnet fragtomkostning
+        
+            public int Id { get; set; }
+            public string? Transportmetode { get; set; } // Sørg for, at navnet matcher
+            public decimal Distance { get; set; }
+            public decimal TransportCost { get; set; }
+        
 
     }
 }

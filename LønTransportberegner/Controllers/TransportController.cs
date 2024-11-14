@@ -1,47 +1,66 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using LønTransportberegner.Models;
 using LønTransportberegner.Services;
+using Microsoft.Extensions.Logging; 
 
 namespace LønTransportberegner.Controllers
 {
     public class TransportController : Controller
     {
-        private readonly TransportContext _transportContext;
         private readonly ITransportStrategy _carTransport;
         private readonly ITransportStrategy _electricBike;
         private readonly ITransportStrategy _publicTransport;
+        private readonly TransportContext _transportContext;
+        private readonly ILogger<TransportController> _logger; 
 
+        // Constructor injection af afhængigheder
         public TransportController(
+            //ITransportStrategy carTransport,
+            //ITransportStrategy electricBike,
+            //ITransportStrategy publicTransport,
             TransportContext transportContext,
-            ITransportStrategy carTransport,
-            ITransportStrategy electricBike,
-            ITransportStrategy publicTransport)
+            ILogger<TransportController> logger) 
         {
+            _carTransport = new CarTransport();
+            _electricBike = new ElectricBike();
+            _publicTransport = new publicTransport();
             _transportContext = transportContext;
-            _carTransport = carTransport;
-            _electricBike = electricBike;
-            _publicTransport = publicTransport;
+            _logger = logger; 
+
+            logger.LogInformation("CarTransport: {CarTransport}, ElectricBike: {ElectricBike}, PublicTransport: {PublicTransport}",
+              _carTransport?.GetType().Name,
+              _electricBike?.GetType().Name,
+              _publicTransport?.GetType().Name);
         }
 
-        [HttpPost]
-        public IActionResult Index(TransportModel model, string Transportmetode)
+        public IActionResult Index(TransportModel model)
         {
-            // Vælg transportmetode baseret på brugerens valg
-            ITransportStrategy selectedTransportMethod = Transportmetode switch
+            try
             {
-                "CarTransport" => _carTransport,
-                "ElectricBike" => _electricBike,
-                "PublicTransport" => _publicTransport,
-                _ => throw new ArgumentException("Invalid transport method")
-            };
+               
+                ITransportStrategy selectedTransportMethod = model.Transportmetode switch
+                {
+                    "CarTransport" => _carTransport,
+                    "ElectricBike" => _electricBike,
+                    "PublicTransport" => _publicTransport,
+                   
+                };
 
-            // Sæt den valgte transportmetode i konteksten
-            _transportContext.SetTransportStrategy(selectedTransportMethod);
+                _transportContext.SetTransportStrategy(selectedTransportMethod);
 
-            // Beregn transportomkostningen baseret på afstanden
-            model.TransportCost = _transportContext.CalculateTransportCost(model.Distance);
+                model.TransportCost = _transportContext.CalculateTransportCost(model.Distance);
 
-            return View("Index", model);
+                return View("Index", model);
+            }
+
+
+            catch (Exception ex)
+            {
+              
+                _logger.LogError(ex, "Error setting transport strategy.");
+
+                throw;
+            }
         }
 
 
@@ -50,5 +69,8 @@ namespace LønTransportberegner.Controllers
         {
             return View();
         }
+
     }
+
+
 }

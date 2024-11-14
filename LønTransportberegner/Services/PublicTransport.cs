@@ -1,11 +1,11 @@
 ﻿namespace LønTransportberegner.Services
 {
-    public class publicTransport : ITransportStrategy   
+    public class publicTransport : ITransportStrategy 
     {
 
         public decimal CalculateCost(decimal distance)
         {
-          return distance * 10;
+          return distance * 10m;
         }
     }
 }

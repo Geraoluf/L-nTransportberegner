@@ -1,17 +1,16 @@
-using LønTransportberegner.Services;
+using LønTransportberegner.Services; 
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
-// Registrer transportstrategier som enkeltstående (singleton), da vi kun skal bruge én transportmetode ad gangen
-builder.Services.AddSingleton<ITransportStrategy, CarTransport>();     // Standard transport
-builder.Services.AddSingleton<ITransportStrategy, ElectricBike>();     // Elektrisk cykel transport
-builder.Services.AddSingleton<ITransportStrategy, publicTransport>();  // Offentlig transport
 
-// Registrer TransportContext
 builder.Services.AddSingleton<TransportContext>();
+
+builder.Logging.ClearProviders(); 
+builder.Logging.AddConsole();      
+builder.Logging.SetMinimumLevel(LogLevel.Information); 
 
 var app = builder.Build();
 

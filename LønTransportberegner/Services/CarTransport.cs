@@ -5,7 +5,7 @@
 
         public decimal CalculateCost(decimal distance)
         {
-            return distance * 5;
+            return distance * 5m;
         }
     }
 }

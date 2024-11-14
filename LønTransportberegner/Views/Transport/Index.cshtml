@@ -4,15 +4,15 @@
 <p>Vælg Transportmetode</p>
 
 <form asp-action="Index" asp-controller="Transport" method="post">
-
     <input type="hidden" asp-for="Id" />
 
     <div class="mb-3">
         <div class="form-group">
-            <label for="Transportmetode">Transport Metode:</label>
+            <label asp-for="Transportmetode">Transport Metode:</label>
             <br />
             <br />
-            <select class="form-control" name="Transportmetode">
+
+            <select class="form-control" asp-for="Transportmetode">
                 <option value="CarTransport">Bil</option>
                 <option value="ElectricBike">Elektrisk cykel</option>
                 <option value="PublicTransport">Offentlig transport</option>
@@ -21,12 +21,13 @@
     </div>
 
     <div class="mb-3">
-        <label for="Distance">Afstand (km):</label>
-        <input type="number" class="form-control" name="Distance" step="0.01" required />
+        <label asp-for="Distance">Afstand (km):</label>
+        <input type="number" class="form-control" asp-for="Distance" step="0.01" required />
     </div>
 
     <button type="submit" class="btn btn-primary">Beregn Transportomkostninger</button>
 </form>
+
 
 <br />
 @if (Model != null && Model.TransportCost > 0)
