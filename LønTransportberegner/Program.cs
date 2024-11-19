@@ -1,12 +1,19 @@
-using LønTransportberegner.Services; 
+using LønTransportberegner.Models.Domæne;
+using LønTransportberegner.Repositories;
+using LønTransportberegner.Services;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDbContext<ConnectDbContext>(options => 
+options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString")));
 
 builder.Services.AddSingleton<TransportContext>();
+
+builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
 builder.Logging.ClearProviders(); 
 builder.Logging.AddConsole();      
