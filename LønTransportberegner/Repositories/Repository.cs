@@ -16,6 +16,8 @@ namespace LønTransportberegner.Repositories
             _dbSet = context.Set<T>();
         }
 
+
+
         public async Task<T> GetByIdAsync(int id)
             {
                 return await _dbSet.FindAsync(id);
@@ -26,10 +28,7 @@ namespace LønTransportberegner.Repositories
                 return await _dbSet.ToListAsync();
             }
 
-            public async Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate)
-            {
-                return await _dbSet.Where(predicate).ToListAsync();
-            }
+            
 
             public async Task AddAsync(T entity)
             {
@@ -37,17 +36,25 @@ namespace LønTransportberegner.Repositories
                 await _context.SaveChangesAsync();
             }
 
+
             public async Task UpdateAsync(T entity)
             {
                 _dbSet.Update(entity);
                 await _context.SaveChangesAsync();
             }
 
+
             public async Task DeleteAsync(T entity)
             {
                 _dbSet.Remove(entity);
                 await _context.SaveChangesAsync();
             }
-        }
+
+
+            public List<T> GetFiltered(Func<T, bool> filter)
+            {
+               return _context.Set<T>().Where(filter).ToList();
+            }
+    }
     
 }

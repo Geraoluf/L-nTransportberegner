@@ -1,0 +1,12 @@
+﻿@model List<string>
+
+<h2>Byer der starter med 'Odense'</h2>
+
+<ul>
+    @foreach (var city in Model)
+    {
+        <li>@(city ?? "Ukendt by")</li>
+    }
+</ul>
+
+<p>Antal gange "Odense" optræder i databasen: @(ViewBag.OdenseCount ?? 0)</p>

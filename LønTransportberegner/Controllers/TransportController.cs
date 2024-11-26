@@ -54,9 +54,7 @@ namespace LønTransportberegner.Controllers
                 };
 
                 _transportContext.SetTransportStrategy(selectedTransportMethod);
-
                 model.TransportCost = _transportContext.CalculateTransportCost(model.Distance);
-
                 return View("Index", model);
             
         }
