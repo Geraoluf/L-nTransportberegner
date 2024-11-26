@@ -31,12 +31,7 @@ namespace LønTransportberegner.Controllers
             return View(citiesStartingWithOdense);
 
 
-
-
-            /* var query = from name in cityNames
-                        where name != null && name.StartsWith("Odense")
-                        select name;
-           */
+            
         }
     }
 }
