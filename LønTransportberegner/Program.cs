@@ -21,7 +21,7 @@ builder.Logging.SetMinimumLevel(LogLevel.Information);
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");

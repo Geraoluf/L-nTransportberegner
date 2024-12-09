@@ -4,7 +4,7 @@
     {
         
             public int Id { get; set; }
-            public string? Transportmetode { get; set; } // Sørg for, at navnet matcher
+            public string? Transportmetode { get; set; } 
             public decimal Distance { get; set; }
             public decimal TransportCost { get; set; }
         

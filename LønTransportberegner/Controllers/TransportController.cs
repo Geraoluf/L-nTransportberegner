@@ -29,7 +29,7 @@ namespace LønTransportberegner.Controllers
             
         }
 
-        public async Task<IActionResult> Index(TransportModel model, string city)
+        public async Task<IActionResult> Index(TransportModel transportmodel, string city)
         {
             var newCity = new CityModel
             {
@@ -40,7 +40,7 @@ namespace LønTransportberegner.Controllers
 
 
 
-            ITransportStrategy selectedTransportMethod = model.Transportmetode switch
+            ITransportStrategy selectedTransportMethod = transportmodel.Transportmetode switch
             {
                     "CarTransport" => _carTransport,
                     "ElectricBike" => _electricBike,
@@ -48,8 +48,8 @@ namespace LønTransportberegner.Controllers
             };
 
                 _transportContext.SetTransportStrategy(selectedTransportMethod);
-                model.TransportCost = _transportContext.CalculateTransportCost(model.Distance);
-                return View("Index", model);
+                transportmodel.TransportCost = _transportContext.CalculateTransportCost(transportmodel.Distance);
+                return View("Index", transportmodel);
             
         }
 

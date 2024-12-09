@@ -8,6 +8,7 @@ namespace LønTransportberegner.Controllers
     {
         private readonly Repository<CityModel> _repository;
 
+
         public CityController(ConnectDbContext context)
         {
             _repository = new Repository<CityModel>(context);
