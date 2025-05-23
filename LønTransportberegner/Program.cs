@@ -43,7 +43,7 @@ app.MapControllerRoute(
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ConnectDbContext>();
-    db.Database.Migrate(); // <-- denne linje
+    db.Database.Migrate(); 
 }
 
 app.Run();
